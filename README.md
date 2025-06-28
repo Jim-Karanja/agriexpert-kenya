@@ -341,23 +341,9 @@ To contribute to the AgriExpert Kenya project:
 - Test with edge cases
 - Validate with agricultural experts
 
-## Support and Contact
-
-For technical support or agricultural expertise validation:
-- Email: support@agriexpert.ke
-- Agricultural Extension Offices
-- Kenya Agricultural and Livestock Research Organization (KALRO)
-
 ## License
 
 This project is developed for educational and research purposes to support smallholder farmers in Kenya. Please ensure proper attribution when using or modifying the system.
-
-## Acknowledgments
-
-- Kenya Agricultural and Livestock Research Organization (KALRO)
-- Agricultural extension officers across Kenya
-- Smallholder farmers who provided valuable insights
-- CLIPS development community
 
 ---
 
