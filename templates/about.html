@@ -1,0 +1,216 @@
+{% extends "base.html" %}
+
+{% block title %}About - AgriExpert Kenya{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-5">
+                <h1 class="fw-bold">
+                    <i class="fas fa-info-circle text-success me-2"></i>
+                    About AgriExpert Kenya
+                </h1>
+                <p class="lead text-muted">
+                    Empowering Kenyan farmers with intelligent agricultural guidance
+                </p>
+            </div>
+
+            <!-- Mission & Vision -->
+            <div class="row mb-5">
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-success">
+                        <div class="card-body text-center">
+                            <i class="fas fa-bullseye fa-3x text-success mb-3"></i>
+                            <h4>Our Mission</h4>
+                            <p class="card-text">
+                                To democratize agricultural knowledge by providing smallholder farmers 
+                                in Kenya with expert recommendations tailored to their specific farming conditions.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100 border-primary">
+                        <div class="card-body text-center">
+                            <i class="fas fa-eye fa-3x text-primary mb-3"></i>
+                            <h4>Our Vision</h4>
+                            <p class="card-text">
+                                A Kenya where every farmer has access to expert agricultural advice, 
+                                leading to increased food security and improved livelihoods.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="mb-5">
+                <h2 class="text-center mb-4">How AgriExpert Works</h2>
+                <div class="row">
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                             style="width: 80px; height: 80px;">
+                            <i class="fas fa-clipboard-list fa-2x text-success"></i>
+                        </div>
+                        <h5>1. Input Your Data</h5>
+                        <p class="text-muted">
+                            Tell us about your farm conditions, crops, and any problems you're facing.
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                             style="width: 80px; height: 80px;">
+                            <i class="fas fa-brain fa-2x text-success"></i>
+                        </div>
+                        <h5>2. AI Analysis</h5>
+                        <p class="text-muted">
+                            Our expert system analyzes your information using agricultural best practices and local knowledge.
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-center mb-4">
+                        <div class="bg-light rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                             style="width: 80px; height: 80px;">
+                            <i class="fas fa-lightbulb fa-2x text-success"></i>
+                        </div>
+                        <h5>3. Get Recommendations</h5>
+                        <p class="text-muted">
+                            Receive personalized, actionable recommendations to improve your farming practices.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology -->
+            <div class="card mb-5">
+                <div class="card-header bg-success text-white">
+                    <h3 class="mb-0">
+                        <i class="fas fa-cogs me-2"></i>
+                        Technology Behind AgriExpert
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <p>
+                        AgriExpert Kenya is powered by <strong>CLIPS (C Language Integrated Production System)</strong>, 
+                        a sophisticated expert system that encodes agricultural knowledge into a rule-based format.
+                    </p>
+                    
+                    <h5 class="text-success">Key Features:</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check text-success me-2"></i>
+                            <strong>Expert Knowledge Base:</strong> Contains tested agricultural practices specific to Kenya
+                        </li>
+                        <li><i class="fas fa-check text-success me-2"></i>
+                            <strong>Context-Aware Recommendations:</strong> Considers altitude, soil type, rainfall, and crop varieties
+                        </li>
+                        <li><i class="fas fa-check text-success me-2"></i>
+                            <strong>Problem Diagnosis:</strong> Identifies pests, diseases, and nutrient deficiencies
+                        </li>
+                        <li><i class="fas fa-check text-success me-2"></i>
+                            <strong>Priority-Based Advice:</strong> Ranks recommendations by urgency and importance
+                        </li>
+                        <li><i class="fas fa-check text-success me-2"></i>
+                            <strong>Local Adaptation:</strong> Tailored for Kenyan farming conditions and crop varieties
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Coverage -->
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h3 class="text-success">Crops Covered</h3>
+                    <div class="row">
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-seedling me-2"></i>Maize</li>
+                                <li><i class="fas fa-seedling me-2"></i>Beans</li>
+                                <li><i class="fas fa-seedling me-2"></i>Cassava</li>
+                                <li><i class="fas fa-seedling me-2"></i>Sweet Potato</li>
+                                <li><i class="fas fa-seedling me-2"></i>Irish Potato</li>
+                                <li><i class="fas fa-seedling me-2"></i>Vegetables</li>
+                            </ul>
+                        </div>
+                        <div class="col-6">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-seedling me-2"></i>Coffee</li>
+                                <li><i class="fas fa-seedling me-2"></i>Tea</li>
+                                <li><i class="fas fa-seedling me-2"></i>Banana</li>
+                                <li><i class="fas fa-seedling me-2"></i>Millet</li>
+                                <li><i class="fas fa-seedling me-2"></i>Sorghum</li>
+                                <li><i class="fas fa-seedling me-2"></i>& More...</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <h3 class="text-success">Guidance Areas</h3>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-check-circle me-2"></i>Crop variety selection</li>
+                        <li><i class="fas fa-check-circle me-2"></i>Soil management practices</li>
+                        <li><i class="fas fa-check-circle me-2"></i>Pest and disease control</li>
+                        <li><i class="fas fa-check-circle me-2"></i>Fertilization recommendations</li>
+                        <li><i class="fas fa-check-circle me-2"></i>Water management strategies</li>
+                        <li><i class="fas fa-check-circle me-2"></i>Planting guidelines</li>
+                        <li><i class="fas fa-check-circle me-2"></i>Harvesting and post-harvest handling</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Benefits -->
+            <div class="bg-light p-4 rounded mb-5">
+                <h3 class="text-center text-success mb-4">Why Choose AgriExpert Kenya?</h3>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <h6><i class="fas fa-dollar-sign text-success me-2"></i>Free to Use</h6>
+                        <p class="small text-muted">No charges for consultations or recommendations.</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h6><i class="fas fa-clock text-success me-2"></i>Available 24/7</h6>
+                        <p class="small text-muted">Get advice anytime, from anywhere with internet access.</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h6><i class="fas fa-language text-success me-2"></i>Easy to Use</h6>
+                        <p class="small text-muted">Simple interface designed for farmers of all literacy levels.</p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <h6><i class="fas fa-map-marker-alt text-success me-2"></i>Kenya-Specific</h6>
+                        <p class="small text-muted">Recommendations tailored for Kenyan climate and conditions.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact & Support -->
+            <div class="text-center">
+                <h3 class="text-success mb-3">Need Help?</h3>
+                <p class="mb-4">
+                    Our support team is here to help you get the most out of AgriExpert Kenya.
+                </p>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">Contact Us</h5>
+                                <p class="card-text">
+                                    <i class="fas fa-phone me-2"></i><strong>Phone:</strong> 0800-AGRI-HELP<br>
+                                    <i class="fas fa-envelope me-2"></i><strong>Email:</strong> info@agriexpert.co.ke<br>
+                                    <i class="fas fa-clock me-2"></i><strong>Hours:</strong> Monday - Friday, 8 AM - 6 PM
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Call to Action -->
+            <div class="text-center mt-5">
+                <a href="{{ url_for('consultation') }}" class="btn btn-success btn-lg">
+                    <i class="fas fa-rocket me-2"></i>
+                    Start Your Free Consultation
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

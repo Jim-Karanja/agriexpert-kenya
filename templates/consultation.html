@@ -1,0 +1,410 @@
+{% extends "base.html" %}
+
+{% block title %}Agricultural Consultation - AgriExpert Kenya{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-section {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        margin-bottom: 2rem;
+    }
+    
+    .section-header {
+        background: var(--primary-green);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 10px 10px 0 0;
+        margin: 0;
+    }
+    
+    .loading-spinner {
+        display: none;
+    }
+    
+    .problem-item {
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        background: #f8f9fa;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="text-center mb-5">
+                <h1 class="fw-bold">
+                    <i class="fas fa-clipboard-list text-success me-2"></i>
+                    Agricultural Consultation
+                </h1>
+                <p class="lead text-muted">
+                    Tell us about your farm and we'll provide personalized recommendations
+                </p>
+            </div>
+
+            <form id="consultationForm">
+                <!-- Farmer Information -->
+                <div class="form-section">
+                    <h3 class="section-header">
+                        <i class="fas fa-user me-2"></i>
+                        Farmer Information
+                    </h3>
+                    <div class="p-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="farmerName" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="farmerName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="contact" class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-control" id="contact" placeholder="0712345678" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="county" class="form-label">County *</label>
+                                <select class="form-select" id="county" required>
+                                    <option value="">Choose county...</option>
+                                    <option value="Nairobi">Nairobi</option>
+                                    <option value="Kiambu">Kiambu</option>
+                                    <option value="Machakos">Machakos</option>
+                                    <option value="Kajiado">Kajiado</option>
+                                    <option value="Murang'a">Murang'a</option>
+                                    <option value="Nyeri">Nyeri</option>
+                                    <option value="Embu">Embu</option>
+                                    <option value="Meru">Meru</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="subCounty" class="form-label">Sub-County</label>
+                                <input type="text" class="form-control" id="subCounty">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="farmSize" class="form-label">Farm Size (acres) *</label>
+                                <input type="number" step="0.1" class="form-control" id="farmSize" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="yearsFarming" class="form-label">Years of Farming Experience *</label>
+                                <input type="number" class="form-control" id="yearsFarming" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Farm Conditions -->
+                <div class="form-section">
+                    <h3 class="section-header">
+                        <i class="fas fa-mountain me-2"></i>
+                        Farm Conditions
+                    </h3>
+                    <div class="p-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="soilType" class="form-label">Soil Type *</label>
+                                <select class="form-select" id="soilType" required>
+                                    <option value="">Choose soil type...</option>
+                                    <option value="clay">Clay</option>
+                                    <option value="sandy">Sandy</option>
+                                    <option value="loam">Loam</option>
+                                    <option value="volcanic">Volcanic</option>
+                                    <option value="red-earth">Red Earth</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="rainfallPattern" class="form-label">Rainfall Pattern *</label>
+                                <select class="form-select" id="rainfallPattern" required>
+                                    <option value="">Choose rainfall pattern...</option>
+                                    <option value="high">High (>1000mm/year)</option>
+                                    <option value="medium">Medium (500-1000mm/year)</option>
+                                    <option value="low">Low (<500mm/year)</option>
+                                    <option value="irregular">Irregular</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="altitude" class="form-label">Altitude (meters above sea level) *</label>
+                                <input type="number" class="form-control" id="altitude" placeholder="e.g., 1500" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="waterSource" class="form-label">Water Source *</label>
+                                <select class="form-select" id="waterSource" required>
+                                    <option value="">Choose water source...</option>
+                                    <option value="river">River</option>
+                                    <option value="well">Well/Borehole</option>
+                                    <option value="rainwater">Rainwater</option>
+                                    <option value="irrigation">Irrigation System</option>
+                                    <option value="none">None</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="slope" class="form-label">Land Slope *</label>
+                                <select class="form-select" id="slope" required>
+                                    <option value="">Choose slope...</option>
+                                    <option value="flat">Flat</option>
+                                    <option value="gentle">Gentle</option>
+                                    <option value="steep">Steep</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crop Information -->
+                <div class="form-section">
+                    <h3 class="section-header">
+                        <i class="fas fa-seedling me-2"></i>
+                        Crop Information
+                    </h3>
+                    <div class="p-4">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="cropType" class="form-label">Main Crop *</label>
+                                <select class="form-select" id="cropType" required>
+                                    <option value="">Choose crop...</option>
+                                    <option value="maize">Maize</option>
+                                    <option value="beans">Beans</option>
+                                    <option value="cassava">Cassava</option>
+                                    <option value="sweet-potato">Sweet Potato</option>
+                                    <option value="irish-potato">Irish Potato</option>
+                                    <option value="vegetables">Vegetables</option>
+                                    <option value="coffee">Coffee</option>
+                                    <option value="tea">Tea</option>
+                                    <option value="banana">Banana</option>
+                                    <option value="millet">Millet</option>
+                                    <option value="sorghum">Sorghum</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="growthStage" class="form-label">Current Growth Stage *</label>
+                                <select class="form-select" id="growthStage" required>
+                                    <option value="">Choose stage...</option>
+                                    <option value="planting">Planning to Plant</option>
+                                    <option value="germination">Germination</option>
+                                    <option value="vegetative">Vegetative Growth</option>
+                                    <option value="flowering">Flowering</option>
+                                    <option value="fruiting">Fruiting</option>
+                                    <option value="harvesting">Ready for Harvest</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="plantingSeason" class="form-label">Planting Season *</label>
+                                <select class="form-select" id="plantingSeason" required>
+                                    <option value="">Choose season...</option>
+                                    <option value="long-rains">Long Rains (March-June)</option>
+                                    <option value="short-rains">Short Rains (October-December)</option>
+                                    <option value="dry-season">Dry Season (with irrigation)</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="areaPlanted" class="form-label">Area Planted (acres) *</label>
+                                <input type="number" step="0.1" class="form-control" id="areaPlanted" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problems (Optional) -->
+                <div class="form-section">
+                    <h3 class="section-header">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        Current Problems (Optional)
+                    </h3>
+                    <div class="p-4">
+                        <p class="text-muted mb-3">
+                            Tell us about any current issues you're experiencing with your crops
+                        </p>
+                        
+                        <div id="problemsContainer">
+                            <!-- Problems will be added here dynamically -->
+                        </div>
+                        
+                        <button type="button" class="btn btn-outline-primary" id="addProblemBtn">
+                            <i class="fas fa-plus me-2"></i>Add Problem
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                        <span class="submit-text">
+                            <i class="fas fa-search me-2"></i>
+                            Get My Recommendations
+                        </span>
+                        <span class="loading-spinner">
+                            <i class="fas fa-spinner fa-spin me-2"></i>
+                            Processing...
+                        </span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let problemCount = 0;
+
+// Add problem functionality
+document.getElementById('addProblemBtn').addEventListener('click', function() {
+    problemCount++;
+    const problemHtml = `
+        <div class="problem-item" id="problem-${problemCount}">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h6 class="mb-0">Problem ${problemCount}</h6>
+                <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeProblem(${problemCount})">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Problem Type</label>
+                    <select class="form-select problem-type">
+                        <option value="">Choose problem...</option>
+                        <option value="pest">Pest Attack</option>
+                        <option value="disease">Disease</option>
+                        <option value="nutrient-deficiency">Nutrient Deficiency</option>
+                        <option value="water-stress">Water Stress</option>
+                        <option value="weather-damage">Weather Damage</option>
+                        <option value="soil-degradation">Soil Degradation</option>
+                        <option value="low-yield">Low Yield</option>
+                    </select>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Severity</label>
+                    <select class="form-select problem-severity">
+                        <option value="">Choose severity...</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                        <option value="critical">Critical</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-8 mb-3">
+                    <label class="form-label">Symptoms/Description</label>
+                    <textarea class="form-control problem-symptoms" rows="2" placeholder="Describe what you're seeing..."></textarea>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <label class="form-label">Affected Area (acres)</label>
+                    <input type="number" step="0.1" class="form-control problem-area">
+                </div>
+            </div>
+        </div>
+    `;
+    document.getElementById('problemsContainer').insertAdjacentHTML('beforeend', problemHtml);
+});
+
+function removeProblem(id) {
+    document.getElementById(`problem-${id}`).remove();
+}
+
+// Form submission
+document.getElementById('consultationForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Show loading state
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const submitText = submitBtn.querySelector('.submit-text');
+    const loadingSpinner = submitBtn.querySelector('.loading-spinner');
+    
+    submitText.style.display = 'none';
+    loadingSpinner.style.display = 'inline';
+    submitBtn.disabled = true;
+    
+    // Collect form data
+    const farmerData = {
+        name: document.getElementById('farmerName').value,
+        county: document.getElementById('county').value,
+        sub_county: document.getElementById('subCounty').value,
+        farm_size: parseFloat(document.getElementById('farmSize').value),
+        years_farming: parseInt(document.getElementById('yearsFarming').value),
+        contact: document.getElementById('contact').value
+    };
+    
+    const farmConditions = {
+        soil_type: document.getElementById('soilType').value,
+        rainfall_pattern: document.getElementById('rainfallPattern').value,
+        altitude: parseInt(document.getElementById('altitude').value),
+        water_source: document.getElementById('waterSource').value,
+        slope: document.getElementById('slope').value
+    };
+    
+    const cropInfo = {
+        crop_type: document.getElementById('cropType').value,
+        growth_stage: document.getElementById('growthStage').value,
+        planting_season: document.getElementById('plantingSeason').value,
+        area_planted: parseFloat(document.getElementById('areaPlanted').value)
+    };
+    
+    // Collect problems
+    const problems = [];
+    document.querySelectorAll('.problem-item').forEach(item => {
+        const problemType = item.querySelector('.problem-type').value;
+        const severity = item.querySelector('.problem-severity').value;
+        const symptoms = item.querySelector('.problem-symptoms').value;
+        const area = item.querySelector('.problem-area').value;
+        
+        if (problemType && severity) {
+            problems.push({
+                problem_type: problemType,
+                severity: severity,
+                symptoms: symptoms || 'No description provided',
+                affected_area: parseFloat(area) || 0
+            });
+        }
+    });
+    
+    // Submit to backend
+    fetch('/submit_consultation', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            farmer_data: farmerData,
+            farm_conditions: farmConditions,
+            crop_info: cropInfo,
+            problems: problems
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            // Redirect to results page
+            window.location.href = '/results';
+        } else {
+            alert('Error: ' + (data.message || 'Something went wrong'));
+            // Reset button state
+            submitText.style.display = 'inline';
+            loadingSpinner.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
+        // Reset button state
+        submitText.style.display = 'inline';
+        loadingSpinner.style.display = 'none';
+        submitBtn.disabled = false;
+    });
+});
+</script>
+{% endblock %}

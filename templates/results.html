@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}Your Agricultural Recommendations - AgriExpert Kenya{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-5">
+                <h1 class="fw-bold text-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Your Recommendations
+                </h1>
+                <p class="lead">
+                    Personalized agricultural guidance for <strong>{{ farmer_name }}</strong>
+                </p>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    These recommendations are based on your specific farm conditions and current agricultural best practices in Kenya.
+                </div>
+            </div>
+
+            {% if recommendations %}
+                <!-- Priority Filter -->
+                <div class="mb-4">
+                    <h5>Filter by Priority:</h5>
+                    <div class="btn-group" role="group">
+                        <input type="radio" class="btn-check" name="priorityFilter" id="all" value="all" checked>
+                        <label class="btn btn-outline-primary" for="all">All</label>
+                        
+                        <input type="radio" class="btn-check" name="priorityFilter" id="urgent" value="urgent">
+                        <label class="btn btn-outline-danger" for="urgent">Urgent</label>
+                        
+                        <input type="radio" class="btn-check" name="priorityFilter" id="high" value="high">
+                        <label class="btn btn-outline-warning" for="high">High</label>
+                        
+                        <input type="radio" class="btn-check" name="priorityFilter" id="medium" value="medium">
+                        <label class="btn btn-outline-info" for="medium">Medium</label>
+                        
+                        <input type="radio" class="btn-check" name="priorityFilter" id="low" value="low">
+                        <label class="btn btn-outline-success" for="low">Low</label>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="recommendations-container">
+                    {% for recommendation in recommendations %}
+                    <div class="card mb-4 recommendation-card priority-{{ recommendation.priority }}" data-priority="{{ recommendation.priority }}">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <div>
+                                <h5 class="mb-1">
+                                    {% if recommendation.category == 'crop-selection' %}
+                                        <i class="fas fa-seedling me-2"></i>Crop Selection
+                                    {% elif recommendation.category == 'soil-management' %}
+                                        <i class="fas fa-mountain me-2"></i>Soil Management
+                                    {% elif recommendation.category == 'pest-control' %}
+                                        <i class="fas fa-bug me-2"></i>Pest Control
+                                    {% elif recommendation.category == 'disease-control' %}
+                                        <i class="fas fa-virus me-2"></i>Disease Control
+                                    {% elif recommendation.category == 'fertilization' %}
+                                        <i class="fas fa-flask me-2"></i>Fertilization
+                                    {% elif recommendation.category == 'irrigation' %}
+                                        <i class="fas fa-tint me-2"></i>Water Management
+                                    {% elif recommendation.category == 'planting' %}
+                                        <i class="fas fa-hands me-2"></i>Planting Guide
+                                    {% elif recommendation.category == 'harvesting' %}
+                                        <i class="fas fa-warehouse me-2"></i>Harvesting
+                                    {% else %}
+                                        <i class="fas fa-leaf me-2"></i>{{ recommendation.category|title }}
+                                    {% endif %}
+                                </h5>
+                            </div>
+                            <div>
+                                {% if recommendation.priority == 'urgent' %}
+                                    <span class="badge bg-danger fs-6">
+                                        <i class="fas fa-exclamation-triangle me-1"></i>URGENT
+                                    </span>
+                                {% elif recommendation.priority == 'high' %}
+                                    <span class="badge bg-warning fs-6">
+                                        <i class="fas fa-exclamation me-1"></i>HIGH
+                                    </span>
+                                {% elif recommendation.priority == 'medium' %}
+                                    <span class="badge bg-info fs-6">
+                                        <i class="fas fa-info me-1"></i>MEDIUM
+                                    </span>
+                                {% else %}
+                                    <span class="badge bg-success fs-6">
+                                        <i class="fas fa-check me-1"></i>LOW
+                                    </span>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <h6 class="text-primary mb-3">
+                                <i class="fas fa-clipboard-list me-2"></i>Action Required:
+                            </h6>
+                            <p class="card-text">{{ recommendation.action }}</p>
+                            
+                            <!-- Additional details if available -->
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <small class="text-muted">
+                                        <i class="fas fa-clock me-1"></i>
+                                        <strong>Implementation:</strong> Immediate action recommended
+                                    </small>
+                                </div>
+                                <div class="col-md-6">
+                                    <small class="text-muted">
+                                        <i class="fas fa-target me-1"></i>
+                                        <strong>Category:</strong> {{ recommendation.category|replace('-', ' ')|title }}
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Summary Section -->
+                <div class="mt-5 p-4 bg-light rounded">
+                    <h4 class="text-primary mb-3">
+                        <i class="fas fa-chart-pie me-2"></i>
+                        Recommendations Summary
+                    </h4>
+                    <div class="row text-center">
+                        <div class="col-md-3">
+                            <div class="text-danger">
+                                <i class="fas fa-exclamation-triangle fa-2x mb-2"></i>
+                                <h5 id="urgentCount">0</h5>
+                                <small>Urgent</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-warning">
+                                <i class="fas fa-exclamation fa-2x mb-2"></i>
+                                <h5 id="highCount">0</h5>
+                                <small>High Priority</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-info">
+                                <i class="fas fa-info fa-2x mb-2"></i>
+                                <h5 id="mediumCount">0</h5>
+                                <small>Medium Priority</small>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="text-success">
+                                <i class="fas fa-check fa-2x mb-2"></i>
+                                <h5 id="lowCount">0</h5>
+                                <small>Low Priority</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="text-center mt-5">
+                    <a href="#" onclick="window.print()" class="btn btn-success me-3">
+                        <i class="fas fa-print me-2"></i>
+                        Print Recommendations
+                    </a>
+                    <a href="{{ url_for('consultation') }}" class="btn btn-outline-primary me-3">
+                        <i class="fas fa-redo me-2"></i>
+                        New Consultation
+                    </a>
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-secondary">
+                        <i class="fas fa-home me-2"></i>
+                        Back to Home
+                    </a>
+                </div>
+
+            {% else %}
+                <!-- No Recommendations -->
+                <div class="text-center">
+                    <i class="fas fa-exclamation-circle fa-4x text-warning mb-3"></i>
+                    <h3>No Recommendations Available</h3>
+                    <p class="lead text-muted">
+                        We couldn't generate recommendations based on the provided information.
+                    </p>
+                    <a href="{{ url_for('consultation') }}" class="btn btn-primary">
+                        <i class="fas fa-redo me-2"></i>
+                        Try Again
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Count recommendations by priority
+document.addEventListener('DOMContentLoaded', function() {
+    const priorities = ['urgent', 'high', 'medium', 'low'];
+    priorities.forEach(priority => {
+        const count = document.querySelectorAll(`[data-priority="${priority}"]`).length;
+        const countElement = document.getElementById(`${priority}Count`);
+        if (countElement) {
+            countElement.textContent = count;
+        }
+    });
+});
+
+// Filter functionality
+document.querySelectorAll('input[name="priorityFilter"]').forEach(radio => {
+    radio.addEventListener('change', function() {
+        const selectedPriority = this.value;
+        const recommendations = document.querySelectorAll('.recommendation-card');
+        
+        recommendations.forEach(card => {
+            if (selectedPriority === 'all' || card.dataset.priority === selectedPriority) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+});
+
+// Print styling
+window.addEventListener('beforeprint', function() {
+    // Hide filter buttons when printing
+    document.querySelector('.btn-group').style.display = 'none';
+});
+
+window.addEventListener('afterprint', function() {
+    // Show filter buttons after printing
+    document.querySelector('.btn-group').style.display = 'block';
+});
+</script>
+{% endblock %}
