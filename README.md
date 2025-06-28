@@ -57,7 +57,7 @@ agriexpert-kenya/
    sudo pacman -S clips
    
    # Or download from: http://clipsrules.sourceforge.net/
-   ```
+   ```Windows
 
 2. **Clone/Download the project**:
    ```bash
