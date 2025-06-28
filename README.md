@@ -61,14 +61,116 @@ agriexpert-kenya/
 
 2. **Clone/Download the project**:
    ```bash
-   git clone [repository-url]
+   git clone https://github.com/Jim-Karanja/agriexpert-kenya.git
    cd agriexpert-kenya
+   ```
+
+3. **Install Python dependencies** (for GUI interface):
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+   
+   Or if you prefer using a virtual environment:
+   ```bash
+   python3 -m venv agriexpert-env
+   source agriexpert-env/bin/activate  # On Windows: agriexpert-env\Scripts\activate
+   pip install -r requirements.txt
    ```
 
 ## Usage Instructions
 
-### Option 1: Interactive Mode
-For real farmer consultations with step-by-step data collection:
+### Option 1: Web GUI Interface (Recommended for Farmers)
+The most user-friendly way to use AgriExpert Kenya is through the web interface:
+
+#### Installation
+1. **Install Python dependencies**:
+   ```bash
+   pip3 install -r requirements.txt
+   ```
+
+2. **Update CLIPS path in app.py**:
+   Edit `app.py` and update the `CLIPS_PATH` variable to point to your CLIPS installation:
+   ```python
+   CLIPS_PATH = '/usr/bin/clips'  # Or your CLIPS installation path
+   ```
+
+3. **Start the web server**:
+   ```bash
+   ./start_gui.sh
+   ```
+   
+   Or manually:
+   ```bash
+   python3 app.py
+   ```
+
+4. **Access the web interface**:
+   - Open your browser and go to: `http://localhost:5000`
+   - For network access: `http://YOUR_IP_ADDRESS:5000`
+
+#### Features
+- **Farmer-friendly forms**: Easy data entry with dropdown menus
+- **Step-by-step consultation**: Guided process for farmers
+- **Visual recommendations**: Clear, actionable advice
+- **Problem diagnosis**: Upload symptoms and get solutions
+- **Printable reports**: Generate PDF recommendations
+- **Multi-language support**: Swahili and English interfaces
+
+### Option 2: CLIPS Server Mode
+Run CLIPS as a server for integration with other applications:
+
+#### Basic Server Setup
+```bash
+# Start CLIPS in batch mode
+clips -f agri_expert.clp < consultation_commands.txt > results.txt
+```
+
+#### HTTP API Server
+The Flask app (`app.py`) provides RESTful API endpoints:
+
+```bash
+# Start the server
+python3 app.py
+
+# API endpoint for consultations
+POST http://localhost:5000/submit_consultation
+Content-Type: application/json
+
+{
+  "farmer_data": {
+    "name": "John Doe",
+    "county": "Kiambu",
+    "sub_county": "Limuru",
+    "farm_size": 2,
+    "years_farming": 5,
+    "contact": "+254700000000"
+  },
+  "farm_conditions": {
+    "soil_type": "loam",
+    "rainfall_pattern": "high",
+    "altitude": 1800,
+    "water_source": "rain-fed",
+    "slope": "gentle"
+  },
+  "crop_info": {
+    "crop_type": "maize",
+    "growth_stage": "flowering",
+    "planting_season": "long-rains",
+    "area_planted": 1.5
+  },
+  "problems": [
+    {
+      "problem_type": "pest",
+      "symptoms": "holes in leaves",
+      "severity": "high",
+      "affected_area": 80
+    }
+  ]
+}
+```
+
+### Option 3: Interactive CLIPS Mode
+For technical users and development:
 
 ```bash
 clips
@@ -85,7 +187,7 @@ The system will guide you through:
 4. Problem identification
 5. Recommendation generation
 
-### Option 2: Demo Mode
+### Option 4: Demo Mode
 To see the system in action with sample data:
 
 ```bash
@@ -96,7 +198,7 @@ CLIPS> (run)
 
 This will demonstrate the system with three sample farmers and show various types of recommendations.
 
-### Option 3: Direct Knowledge Base
+### Option 5: Direct Knowledge Base Access
 For developers or advanced users to examine rules and facts:
 
 ```bash
